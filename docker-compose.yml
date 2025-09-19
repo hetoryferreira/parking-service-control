@@ -1,0 +1,17 @@
+services:
+  parking-api:
+    build: .
+    image: estapar/parking-api:local
+    container_name: parking-api
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    ports:
+      - "3003:3003"
+
+  garage-sim:
+    image: cfontes0estapar/garage-sim:1.0.0
+    container_name: garage-sim
+    depends_on:
+      - parking-api
+    environment:
+      - WEBHOOK_URL=http://parking-api:3003/webhook

@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:parking;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: estapar
+    password: estapar
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+      continue-on-error: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+pricing:
+  thresholds:
+    t25: 0.25
+    t50: 0.50
+    t75: 0.75
+  factors:
+    discount10: 0.90  # -10% quando < 25%
+    base: 1.00        #  0% quando <= 50%
+    surcharge10: 1.10 # +10% quando <= 75%
+    surcharge25: 1.25 # +25% quando > 75%
+  price-scale: 2
+  price-rounding: HALF_UP
+  free-minutes: 30
